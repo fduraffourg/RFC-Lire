@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center">
+<TextView  
+    android:layout_height="wrap_content" 
+    android:text="RFC Lire"
+    android:textSize="30sp"
+    android:layout_marginBottom="10sp"
+    android:layout_width="wrap_content"/>
+<TextView android:text="@string/small_description"
+	android:layout_height="wrap_content" android:id="@+id/small_description"
+	android:layout_width="wrap_content" android:layout_marginBottom="40sp"
+	android:textSize="20sp"></TextView>
+
+<LinearLayout android:layout_height="wrap_content"
+	android:id="@+id/linearLayout1" android:layout_width="match_parent" android:gravity="center_horizontal">
+    <EditText android:text="" android:id="@+id/edit_rfc_num"
+	android:layout_width="wrap_content" android:layout_height="wrap_content" android:minWidth="100sp"></EditText>
+    <Button android:text="@string/search" android:id="@+id/button_search"
+	android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
+</LinearLayout>
+<Button android:text="@string/last_seen" android:id="@+id/button_last_seen"
+	android:layout_width="wrap_content" android:layout_height="wrap_content"
+	android:minWidth="200sp"></Button>
+<Button android:id="@+id/button_quit" android:layout_height="wrap_content"
+	android:text="@string/exit" android:layout_marginTop="10sp"
+	android:layout_width="wrap_content" android:minWidth="200sp"></Button>
+</LinearLayout>

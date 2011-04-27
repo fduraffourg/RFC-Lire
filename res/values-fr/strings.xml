@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="small_description">Lecteur RFC</string>
+    <string name="exit">Quitter</string>
+    <string name="search">Chercher</string>
+    <string name="save_rfc">Enregistrer RFC</string>
+    <string name="no_content">Aucun contenu</string>
+    <string name="last_seen">Dernier lu</string>
+</resources>

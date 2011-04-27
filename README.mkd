@@ -1,0 +1,9 @@
+RFC-Lire
+========
+
+Description
+-----------
+
+This is an android application aimed at reading RFC from ietf on your phone.
+It does not use a browser to display the content.
+You can save the RFC locally in order to read it when you have no connections.

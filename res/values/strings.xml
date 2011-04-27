@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">RFC-Lire</string>
+    <string name="small_description">RFC Reader</string>
+    <string name="exit">Exit</string>
+    <string name="search">Search</string>
+    <string name="save_rfc">Save RFC</string>
+    <string name="no_content">No content</string>
+     <string name="last_seen">Last seen RFC</string>
+</resources>
