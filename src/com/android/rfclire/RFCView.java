@@ -23,7 +23,7 @@ import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,7 +33,7 @@ public class RFCView extends Activity {
 
 	private Context mContext;
 	private TextView rfcTv;
-	private View scrollView;
+	private ScrollView scrollView;
 	
 	private String rfcText;
 	private int rfcNum;
@@ -51,52 +51,33 @@ public class RFCView extends Activity {
         setContentView(R.layout.rfcview);
         rfcTv = (TextView) findViewById(R.id.rfc_content);
         
+        scrollView = (ScrollView) findViewById(R.id.rfcview_scrollview);
+        
+        
         if (getRfcContent()) {
         	setRfcContent();
         }
     }
     
-//    @Override
-//    public void onResume() {
-//    	super.onResume();
-//        // Scroll view
-//        scrollView = (ScrollView) findViewById(R.id.rfcview_scrollview);
-//        Integer scrollX = 0;
-//        Integer scrollY = 0;
-//        // get the previous scroll position
-//    	String filename = String.format("rfc%d.txt", rfcNum);
-//    	File file = new File(mContext.getCacheDir(), filename);
-//    	try {
-//    		InputStream is = new FileInputStream(file);
-//    		byte[] buffer = new byte[4];
-//    		is.read(buffer, 0, 4);
-//    		scrollX = this.byteArrayToInt(buffer);
-//    		is.read(buffer, 0, 4);
-//    		scrollY = this.byteArrayToInt(buffer);
-//    		is.close();
-//    	} catch (Exception e) {  	}
-//    	scrollView.scrollTo(scrollX, scrollY);
-//    }
+    @Override
+    public void onStart() {
+    	super.onStart();
+    	
+    	// Scroll the view to the last position
+    	scrollView.post(new Runnable() {
+    		//@Override
+    		public void run() {
+    			Integer scroll;
+    			scroll = loadScrollPosition();
+    			scrollView.scrollTo(0,scroll);
+    		}
+    	});
+    }
 
     @Override
-    public void onPause() {
-    	super.onPause();
-    	
-    	// Get the scroll position
-    	Integer scrollX, scrollY;
-    	scrollX = scrollView.getScrollX();
-    	scrollY = scrollView.getScrollY();
-    	
-    	// Save the scroll position
-    	String filename = String.format("rfc%d.txt", rfcNum);
-    	File file = new File(mContext.getCacheDir(), filename);
-    	try {
-    		OutputStream os = new FileOutputStream(file);
-    		os.write(ByteBuffer.allocate(Integer.SIZE/8).putInt(scrollX).array());
-    		os.write(ByteBuffer.allocate(Integer.SIZE/8).putInt(scrollY).array());
-    		os.flush();
-    		os.close();
-    	} catch (Exception e) {  	}
+    public void onStop() {
+    	super.onStop();
+    	saveScrollPosition();
     }
     
     @Override
@@ -119,7 +100,7 @@ public class RFCView extends Activity {
         	}
             return true;
         case R.id.rfcview_menu_quit:
-            finish();
+        	finish();
             return true;
         default:
             return super.onOptionsItemSelected(item);
@@ -241,4 +222,38 @@ public class RFCView extends Activity {
         return (b[3] & 0xFF) + ((b[2] & 0xFF) << 8) + ((b[1] & 0xFF) << 16) + ((b[0] & 0xFF) << 24);
     }
 
+    private void saveScrollPosition() {
+    	// Get the scroll position
+    	Integer scrollX, scrollY;
+    	//scrollX = scrollView.getScrollX();
+    	scrollY = scrollView.getScrollY();
+    	
+    	// Save the scroll position
+    	String filename = String.format("rfc%d.txt", rfcNum);
+    	File file = new File(mContext.getCacheDir(), filename);
+    	try {
+    		OutputStream os = new FileOutputStream(file);
+    		//os.write(ByteBuffer.allocate(Integer.SIZE/8).putInt(scrollX).array());
+    		os.write(ByteBuffer.allocate(Integer.SIZE/8).putInt(scrollY).array());
+    		os.flush();
+    		os.close();
+    	} catch (Exception e) {  	}    	
+    }
+    
+    private Integer loadScrollPosition() {
+    	// Get the scroll position
+    	Integer scrollY = 0;
+    	byte[] buffer = new byte[4];
+    	
+    	// Save the scroll position
+    	String filename = String.format("rfc%d.txt", rfcNum);
+    	File file = new File(mContext.getCacheDir(), filename);
+    	try {
+    		InputStream is = new FileInputStream(file);
+    		is.read(buffer, 0, 4);
+    		scrollY = byteArrayToInt(buffer);
+    		is.close();
+    	} catch (Exception e) {  	}
+    	return scrollY;
+    }
 }

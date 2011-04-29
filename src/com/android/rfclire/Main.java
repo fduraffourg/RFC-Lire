@@ -35,7 +35,12 @@ public class Main extends Activity {
             	finish();
             }
         });
-        
+    }
+    
+    @Override
+    public void onResume() {
+    	super.onResume();
+    	
         // Create text and plug action to last seen button
         Button button_last = (Button) findViewById(R.id.button_last_seen);
         SharedPreferences settings = getPreferences(0);
